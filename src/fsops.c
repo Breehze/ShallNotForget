@@ -12,7 +12,7 @@ static char path[PATH_BUFFER_SIZE] = {0};
 void FSstorageSetup(const char * target){
     const char * homeDir = getenv("HOME");
     snprintf(path,sizeof(path) / sizeof(char),"%s%s",homeDir,target);
-    FILE* targetDir = fopen(path,"w"); 
+    FILE* targetDir = fopen(path,"a"); 
     
     if(!targetDir) {
         char createPath[PATH_BUFFER_SIZE] = {0};  
