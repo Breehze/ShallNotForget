@@ -3,10 +3,9 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "parse.h"
-#include "fsops.h"
 #include "config.c"
-#include "ops.h"
+#include "ops/ops.h"
+#include "fsops/fsops.h"
 
 void parseAdd(int argc,char **argv){
     if(argc<2){
@@ -38,9 +37,7 @@ void parseHelp(int argc,char **argv){
 
 void parseInitial(int argc,char **argv){
     if(argc < 2) return;
-    
-    FSstorageSetup(PATH);
-          
+         
     int op = OPS_AMOUNT + 1;
     
     for(size_t i = 0;i < OPS_AMOUNT;i++){
@@ -52,4 +49,10 @@ void parseInitial(int argc,char **argv){
     if(op == OPS_AMOUNT + 1) return;
 
     opCalls[op](argc-2,argv);  
+}
+
+int main(int argc, char **argv){
+    FSstorageSetup(PATH);
+    parseInitial(argc,argv);
+    return 0;
 }

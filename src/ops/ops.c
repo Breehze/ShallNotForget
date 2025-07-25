@@ -6,30 +6,8 @@
 #include <time.h>
 
 #include "ops.h"
-#include "fsops.h"
-
-char timeFormatted[50] = {0};
-
-size_t strToTstmp(const char * string){
-    size_t day,month,year; 
-    int n = sscanf(string, "%ld-%ld-%ld",&day,&month,&year);   
-    if(n != 3) return -1;
-    
-    struct tm timeinfo = {0};
-    timeinfo = (struct tm){
-        .tm_mon = month-1,
-        .tm_mday = day,
-        .tm_year = year-1900
-    };
-    
-    return mktime(&timeinfo);
-}
-
-void tstmpToString(size_t timestamp){
-    time_t tstmp = (time_t)timestamp;
-    struct tm *T = localtime(&tstmp);
-    strftime(timeFormatted,sizeof(timeFormatted)/sizeof(char),"%d.%m.%Y",T);
-}
+#include "../fsops/fsops.h"
+#include "../utils/utils.h"
 
 void snfAdd(const char * reminder,const char * timestamp){
     size_t timestampOG = strToTstmp(timestamp) ;
@@ -120,7 +98,7 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
         
         size_t dayDiff = (ts-timestamp)/(3600*24);
         tstmpToString(ts);
-        printf("%s in %ld days | %s \n",timeFormatted,dayDiff,data);
+        printf("%s in %ld days | %s \n",getDate(),dayDiff,data);
 
     }
 
