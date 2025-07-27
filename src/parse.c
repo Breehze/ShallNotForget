@@ -27,12 +27,20 @@ void parsePop(int argc,char **argv){
 }
 
 void parseUpcoming(int argc,char **argv){
+    size_t limit = 5;
     time_t tstmp = time(NULL);
-    snfFindFromTimestamp(tstmp,100);
+    snfFindFromTimestamp(tstmp,limit);
 }
 
 void parseHelp(int argc,char **argv){
-    printf("This is help page, to be implemented soontm\n");
+    printf("---------------------------------\n");
+    printf("snf add [reminder] [date DD-MM-YYYY]\n");
+    printf("    -Adds a reminder for specific date\n");
+    printf("snf upcoming\n");
+    printf("    -Shows upcoming deadlines\n");
+    printf("snf pop [id]\n");
+    printf("    -Removes a remainder with specified id\n");
+    printf("---------------------------------\n");
 }
 
 void parseInitial(int argc,char **argv){
