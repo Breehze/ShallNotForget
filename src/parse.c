@@ -22,8 +22,12 @@ void parseAdd(int argc,char **argv){
 }
 
 void parsePop(int argc,char **argv){
-    printf("Pop");
-    //something
+    if(argc < 1){
+        printf("Missing something");
+        return;
+    }
+    char * toRemove = argv[2];
+    snfPop(toRemove);
 }
 
 void parseUpcoming(int argc,char **argv){

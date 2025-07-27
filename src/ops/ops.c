@@ -2,8 +2,9 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 #include <time.h>
+#include <stdbool.h>
 
 #include "ops.h"
 #include "../fsops/fsops.h"
@@ -103,5 +104,38 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
 
     }
 
+    json_decref(root);
+}
+
+void snfPop(const char * id){
+    json_t * root = FSopenJson();
+    
+    if(!root || !json_is_array(root)){
+        return;
+    }
+    size_t index = 0;
+    json_t * value = NULL;
+    bool found = false;
+    json_array_foreach(root, index, value){
+        if(!json_is_object(value)){
+            return;
+        }
+        json_t * currIdPacked = json_object_get(value, "id");       
+        if(!json_is_string(currIdPacked)){
+            return;
+        }
+
+        const char * currId = json_string_value(currIdPacked);
+        if(strcmp(currId,id) == 0){
+            found = true;
+            break;
+        }
+
+    }
+    if(found){
+        json_array_remove(root,index);
+        FSdumpJson(root);
+    }
+    
     json_decref(root);
 }
