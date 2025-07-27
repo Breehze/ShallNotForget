@@ -40,6 +40,7 @@ void snfAdd(const char * reminder,const char * timestamp){
     json_t * newRecord = json_object(); 
     json_object_set_new(newRecord,"timestamp",json_integer(timestampOG));
     json_object_set_new(newRecord,"data",json_string(reminder));
+    json_object_set_new(newRecord,"id", json_string(enShittify(hash(timestampOG))));
     
     json_array_insert(root,index,newRecord);
     
