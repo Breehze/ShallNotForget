@@ -7,7 +7,7 @@
 
 static char timeFormatted[50] = {0};
 
-size_t strToTstmp(const char * string){
+size_t UTILSstrToTstmp(const char * string){
     size_t day,month,year; 
     int n = sscanf(string, "%ld-%ld-%ld",&day,&month,&year);   
     if(n != 3) return -1;
@@ -22,17 +22,17 @@ size_t strToTstmp(const char * string){
     return mktime(&timeinfo);
 }
 
-void tstmpToString(size_t timestamp){
+void UTILStstmpToString(size_t timestamp){
     time_t tstmp = (time_t)timestamp;
     struct tm *T = localtime(&tstmp);
     strftime(timeFormatted,sizeof(timeFormatted)/sizeof(char),"%d.%m.%Y",T);
 }
  
-char * getDate(){
+char * UTILSgetDate(){
     return timeFormatted;
 }
 
-uint64_t hash(uint64_t x) {
+uint64_t UTILShash(uint64_t x) {
     x = (x ^ (x >> 30)) * UINT64_C(0xbf58476d1ce4e5b9);
     x = (x ^ (x >> 27)) * UINT64_C(0x94d049bb133111eb);
     x = x ^ (x >> 31);
@@ -42,7 +42,7 @@ uint64_t hash(uint64_t x) {
 static char encoded[50] = {0}; 
 const char encTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-char * enShittify(size_t number){
+char * UTILSenShittify(size_t number){
     //shitty base64 encoding
     size_t bitSize = sizeof(number) * 8;
     size_t paddingSize = bitSize % 6;

@@ -11,7 +11,7 @@
 #include "../utils/utils.h"
 
 void snfAdd(const char * reminder,const char * timestamp){
-    size_t timestampOG = strToTstmp(timestamp) ;
+    size_t timestampOG = UTILSstrToTstmp(timestamp) ;
     if(timestampOG == -1) return;
     
     json_t * root = FSopenJson();
@@ -41,7 +41,7 @@ void snfAdd(const char * reminder,const char * timestamp){
     json_t * newRecord = json_object(); 
     json_object_set_new(newRecord,"timestamp",json_integer(timestampOG));
     json_object_set_new(newRecord,"data",json_string(reminder));
-    json_object_set_new(newRecord,"id", json_string(enShittify(hash(timestampOG))));
+    json_object_set_new(newRecord,"id", json_string(UTILSenShittify(UTILShash(timestampOG))));
     
     json_array_insert(root,index,newRecord);
     
@@ -99,8 +99,8 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
         size_t ts = json_integer_value(jtimestamp);
         
         size_t dayDiff = (ts-timestamp)/(3600*24);
-        tstmpToString(ts);
-        printf("%s in %ld days | %s \n",getDate(),dayDiff,data);
+        UTILStstmpToString(ts);
+        printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff,data);
 
     }
 

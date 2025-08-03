@@ -3,11 +3,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
-size_t strToTstmp(const char * string);
-void tstmpToString(size_t timestamp);
-char * getDate();
+size_t UTILSstrToTstmp(const char * string);
+void UTILStstmpToString(size_t timestamp);
+char * UTILSgetDate();
 
-uint64_t hash(uint64_t x);
+uint64_t UTILShash(uint64_t x);
 
-char * enShittify(size_t number);
+char * UTILSenShittify(size_t number);
 #endif // !DEBUG
