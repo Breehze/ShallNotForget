@@ -1,7 +1,7 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include <stdlib.h>
 
 #include "config.c"
 #include "ops/ops.h"
@@ -33,7 +33,7 @@ void parsePop(int argc,char **argv){
 void parseUpcoming(int argc,char **argv){
     (void)argv; 
     (void)argc;
-    size_t limit = 5;
+    uint64_t limit = 5;
     time_t tstmp = time(NULL);
     snfFindFromTimestamp(tstmp,limit);
 }
@@ -56,7 +56,7 @@ void parseInitial(int argc,char **argv){
          
     int op = OPS_AMOUNT + 1;
     
-    for(size_t i = 0;i < OPS_AMOUNT;i++){
+    for(uint64_t i = 0;i < OPS_AMOUNT;i++){
         if(0 == strcmp(ops[i],argv[1])){
               op = i;
         }

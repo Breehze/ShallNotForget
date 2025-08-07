@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -16,7 +17,7 @@ void FSstorageSetup(const char * target){
     
     if(!targetDir) {
         char createPath[PATH_BUFFER_SIZE] = {0};  
-        for(size_t i = 0; i < strlen(path);i++){
+        for(uint64_t i = 0; i < strlen(path);i++){
             if(path[i]== '/'){
                 mkdir(createPath,S_IRWXU);
             }
@@ -46,5 +47,3 @@ void FSdumpJson(json_t * content){
     json_dumpf(content,f,JSON_INDENT(4)!=0);
     fclose(f);
 }
-
-

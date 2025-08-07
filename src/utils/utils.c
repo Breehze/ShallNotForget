@@ -1,4 +1,3 @@
-#include <string.h>
 #include <stdio.h>
 #include <time.h>
 #include <stdint.h>
@@ -7,8 +6,8 @@
 
 static char timeFormatted[50] = {0};
 
-size_t UTILSstrToTstmp(const char * string){
-    size_t day,month,year; 
+uint64_t UTILSstrToTstmp(const char * string){
+    uint64_t day,month,year; 
     int n = sscanf(string, "%lu-%lu-%lu",&day,&month,&year);   
     if(n != 3) return 0;
     
@@ -22,7 +21,7 @@ size_t UTILSstrToTstmp(const char * string){
     return mktime(&timeinfo);
 }
 
-void UTILStstmpToString(size_t timestamp){
+void UTILStstmpToString(uint64_t timestamp){
     time_t tstmp = (time_t)timestamp;
     struct tm *T = localtime(&tstmp);
     strftime(timeFormatted,sizeof(timeFormatted)/sizeof(char),"%d.%m.%Y",T);
@@ -42,15 +41,15 @@ uint64_t UTILShash(uint64_t x) {
 static char encoded[50] = {0}; 
 const char encTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-char * UTILSenShittify(size_t number){
+char * UTILSenShittify(uint64_t number){
     //shitty base64 encoding
-    size_t bitSize = sizeof(number) * 8;
-    size_t index = 0;
+    uint64_t bitSize = sizeof(number) * 8;
+    uint64_t index = 0;
     bool leading = true;
     
     
     for(int i = bitSize-6; i >= 0; i-=6){
-        size_t toEncode = (number>>i) & 0x3F; 
+        uint64_t toEncode = (number>>i) & 0x3F; 
         if(toEncode){
             leading = false;
         }

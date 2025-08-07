@@ -1,7 +1,7 @@
 #include <jansson.h>
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <stdbool.h>
@@ -11,7 +11,7 @@
 #include "../utils/utils.h"
 
 void snfAdd(const char * reminder,const char * timestamp){
-    size_t timestampOG = UTILSstrToTstmp(timestamp) ;
+    uint64_t timestampOG = UTILSstrToTstmp(timestamp) ;
     if(timestampOG == 0) return;
     
     json_t * root = FSopenJson();
@@ -22,7 +22,7 @@ void snfAdd(const char * reminder,const char * timestamp){
         return;
     }
     
-    size_t index = 0;
+    uint64_t index = 0;
     json_t * value;
     json_array_foreach(root, index, value){
         if(!json_is_object(value)) return;
@@ -31,7 +31,7 @@ void snfAdd(const char * reminder,const char * timestamp){
         
         if(!json_is_integer(timestampAcc)) return;
 
-        size_t tmstp = json_number_value(timestampAcc);
+        uint64_t tmstp = json_number_value(timestampAcc);
         
         if(timestampOG < tmstp){
             break; 
@@ -52,7 +52,7 @@ void snfAdd(const char * reminder,const char * timestamp){
     return;
 }
 
-void snfFindFromTimestamp(size_t timestamp,size_t bound){
+void snfFindFromTimestamp(uint64_t timestamp,uint64_t bound){
     
     json_t * root = FSopenJson();   
     
@@ -62,7 +62,7 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
     } 
     
     //do some fancy bin search here eventually 
-    size_t index = 0;
+    uint64_t index = 0;
     json_t *value;
     
     json_array_foreach(root,index,value){
@@ -81,7 +81,7 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
         }
     }
     
-    for(size_t i = index; i < index+bound;i++){
+    for(uint64_t i = index; i < index+bound;i++){
         json_t * jobj = json_array_get(root,i);
         
         if(!jobj || !json_is_object(jobj)){
@@ -96,9 +96,9 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
         }
 
         const char * data = json_string_value(jdata);
-        size_t ts = json_integer_value(jtimestamp);
+        uint64_t ts = json_number_value(jtimestamp);
         
-        size_t dayDiff = (ts-timestamp)/(3600*24);
+        uint64_t dayDiff = (ts-timestamp)/(3600*24);
         UTILStstmpToString(ts);
         printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff,data);
 
@@ -113,7 +113,7 @@ void snfPop(const char * id){
     if(!root || !json_is_array(root)){
         return;
     }
-    size_t index = 0;
+    uint64_t index = 0;
     json_t * value = NULL;
     bool found = false;
     json_array_foreach(root, index, value){
