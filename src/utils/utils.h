@@ -5,7 +5,7 @@
 
 size_t UTILSstrToTstmp(const char * string);
 void UTILStstmpToString(size_t timestamp);
-char * UTILSgetDate();
+char * UTILSgetDate(void);
 
 uint64_t UTILShash(uint64_t x);
 

@@ -26,11 +26,10 @@ void FSstorageSetup(const char * target){
         
         if(targetDir) fprintf(targetDir,"%s","[]");
     }
-    
     fclose(targetDir);
 }
 
-json_t * FSopenJson(){
+json_t * FSopenJson(void){
     if(!*path) return NULL;
     
     json_error_t err;

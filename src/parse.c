@@ -31,12 +31,16 @@ void parsePop(int argc,char **argv){
 }
 
 void parseUpcoming(int argc,char **argv){
+    (void)argv; 
+    (void)argc;
     size_t limit = 5;
     time_t tstmp = time(NULL);
     snfFindFromTimestamp(tstmp,limit);
 }
 
 void parseHelp(int argc,char **argv){
+    (void)argc;
+    (void)argv;
     printf("---------------------------------\n");
     printf("snf add [reminder] [date DD-MM-YYYY]\n");
     printf("    -Adds a reminder for specific date\n");

@@ -4,7 +4,7 @@
 
 
 void FSstorageSetup(const char * target);
-json_t * FSopenJson();
+json_t * FSopenJson(void);
 void FSdumpJson(json_t * content);
 
 #endif // !DEBUG

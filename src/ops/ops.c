@@ -12,7 +12,7 @@
 
 void snfAdd(const char * reminder,const char * timestamp){
     size_t timestampOG = UTILSstrToTstmp(timestamp) ;
-    if(timestampOG == -1) return;
+    if(timestampOG == 0) return;
     
     json_t * root = FSopenJson();
 
@@ -76,7 +76,7 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
             index = -1;         
             break;
         }
-        if(json_integer_value(jsonTimestamp) > timestamp){
+        if(json_number_value(jsonTimestamp) > timestamp){
             break;
         }
     }

@@ -9,8 +9,8 @@ static char timeFormatted[50] = {0};
 
 size_t UTILSstrToTstmp(const char * string){
     size_t day,month,year; 
-    int n = sscanf(string, "%ld-%ld-%ld",&day,&month,&year);   
-    if(n != 3) return -1;
+    int n = sscanf(string, "%lu-%lu-%lu",&day,&month,&year);   
+    if(n != 3) return 0;
     
     struct tm timeinfo = {0};
     timeinfo = (struct tm){
@@ -28,7 +28,7 @@ void UTILStstmpToString(size_t timestamp){
     strftime(timeFormatted,sizeof(timeFormatted)/sizeof(char),"%d.%m.%Y",T);
 }
  
-char * UTILSgetDate(){
+char * UTILSgetDate(void){
     return timeFormatted;
 }
 
@@ -45,7 +45,6 @@ const char encTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012
 char * UTILSenShittify(size_t number){
     //shitty base64 encoding
     size_t bitSize = sizeof(number) * 8;
-    size_t paddingSize = bitSize % 6;
     size_t index = 0;
     bool leading = true;
     
