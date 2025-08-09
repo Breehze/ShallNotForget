@@ -11,9 +11,14 @@
 #include "../utils/utils.h"
 
 void snfAdd(const char * reminder,const char * timestamp){
-    size_t timestampOG = UTILSstrToTstmp(timestamp) ;
-    if(timestampOG == -1) return;
+    size_t  timestampOG = -1;
+    if(strcmp(timestamp,"tomorrow") == 0){
+        timestampOG = UTILStomorrow();
+    }else{
+        timestampOG = UTILSstrToTstmp(timestamp);
+    }
     
+    if(timestampOG == -1) return;
     json_t * root = FSopenJson();
 
     if(!root || !json_is_array(root)){
@@ -53,7 +58,6 @@ void snfAdd(const char * reminder,const char * timestamp){
 }
 
 void snfFindFromTimestamp(size_t timestamp,size_t bound){
-    
     json_t * root = FSopenJson();   
     
     if(!root || !json_is_array(root)){
@@ -100,7 +104,7 @@ void snfFindFromTimestamp(size_t timestamp,size_t bound){
         
         size_t dayDiff = (ts-timestamp)/(3600*24);
         UTILStstmpToString(ts);
-        printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff,data);
+        printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff+1,data);
 
     }
 

@@ -22,6 +22,13 @@ size_t UTILSstrToTstmp(const char * string){
     return mktime(&timeinfo);
 }
 
+time_t UTILStomorrow(void){
+    time_t currTime = time(NULL);
+    time_t oneDay = 86400;
+    time_t tomorrow = (currTime/oneDay) * oneDay + oneDay ;
+    return tomorrow;
+} 
+
 void UTILStstmpToString(size_t timestamp){
     time_t tstmp = (time_t)timestamp;
     struct tm *T = localtime(&tstmp);
