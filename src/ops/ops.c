@@ -11,9 +11,14 @@
 #include "../utils/utils.h"
 
 void snfAdd(const char * reminder,const char * timestamp){
-    uint64_t timestampOG = UTILSstrToTstmp(timestamp) ;
-    if(timestampOG == 0) return;
+    time_t timestampOG = 0;
+    if(strcmp(timestamp,"tomorrow") == 0){
+        timestampOG = UTILStomorrow();
+    }else{
+        timestampOG = UTILSstrToTstmp(timestamp);
+    }
     
+    if(timestampOG == 0) return;
     json_t * root = FSopenJson();
 
     if(!root || !json_is_array(root)){
@@ -31,7 +36,7 @@ void snfAdd(const char * reminder,const char * timestamp){
         
         if(!json_is_integer(timestampAcc)) return;
 
-        uint64_t tmstp = json_number_value(timestampAcc);
+        time_t tmstp = json_number_value(timestampAcc);
         
         if(timestampOG < tmstp){
             break; 
@@ -52,8 +57,7 @@ void snfAdd(const char * reminder,const char * timestamp){
     return;
 }
 
-void snfFindFromTimestamp(uint64_t timestamp,uint64_t bound){
-    
+void snfFindFromTimestamp(uint64_t timestamp,uint64_t bound){   
     json_t * root = FSopenJson();   
     
     if(!root || !json_is_array(root)){
@@ -100,7 +104,7 @@ void snfFindFromTimestamp(uint64_t timestamp,uint64_t bound){
         
         uint64_t dayDiff = (ts-timestamp)/(3600*24);
         UTILStstmpToString(ts);
-        printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff,data);
+        printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff+1,data);
 
     }
 

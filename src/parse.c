@@ -35,6 +35,12 @@ void parseUpcoming(int argc,char **argv){
     (void)argc;
     uint64_t limit = 5;
     time_t tstmp = time(NULL);
+    for(int i = 1; i < argc ; i++){
+        if(strcmp(argv[i], "-l") == 0 && i < argc-1){
+            int n = sscanf(argv[i+1],"%lu",&limit);    
+            if(n != 1) continue;
+        }
+    }
     snfFindFromTimestamp(tstmp,limit);
 }
 
@@ -44,8 +50,10 @@ void parseHelp(int argc,char **argv){
     printf("---------------------------------\n");
     printf("snf add [reminder] [date DD-MM-YYYY]\n");
     printf("    -Adds a reminder for specific date\n");
-    printf("snf upcoming\n");
+    printf("snf upcoming [flags]\n");
     printf("    -Shows upcoming deadlines\n");
+    printf("    -Flags:\n");
+    printf("        -l [limit] : Limits amount of items to show\n");
     printf("snf pop [id]\n");
     printf("    -Removes a remainder with specified id\n");
     printf("---------------------------------\n");
@@ -64,7 +72,7 @@ void parseInitial(int argc,char **argv){
     
     if(op == OPS_AMOUNT + 1) return;
 
-    opCalls[op](argc-2,argv);  
+    opCalls[op](argc,argv);  
 }
 
 int main(int argc, char **argv){

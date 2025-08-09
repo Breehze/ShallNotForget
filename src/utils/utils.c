@@ -6,7 +6,7 @@
 
 static char timeFormatted[50] = {0};
 
-uint64_t UTILSstrToTstmp(const char * string){
+time_t UTILSstrToTstmp(const char * string){
     uint64_t day,month,year; 
     int n = sscanf(string, "%lu-%lu-%lu",&day,&month,&year);   
     if(n != 3) return 0;
@@ -20,6 +20,13 @@ uint64_t UTILSstrToTstmp(const char * string){
     
     return mktime(&timeinfo);
 }
+
+time_t UTILStomorrow(void){
+    time_t currTime = time(NULL);
+    time_t oneDay = 86400;
+    time_t tomorrow = (currTime/oneDay) * oneDay + oneDay ;
+    return tomorrow;
+} 
 
 void UTILStstmpToString(uint64_t timestamp){
     time_t tstmp = (time_t)timestamp;
