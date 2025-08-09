@@ -12,8 +12,6 @@ void parseAdd(int argc,char **argv){
         printf("Missing something\n");
         return;
     }
-    //Weird behavior when not enclosed in "", look at it later
-    //If having flags implement parsing here i guess
     
     char * timestamp = argv[3];
     char * reminder = argv[2]; 
@@ -35,13 +33,17 @@ void parseUpcoming(int argc,char **argv){
     (void)argc;
     uint64_t limit = 5;
     time_t tstmp = time(NULL);
+    bool showId = false;
     for(int i = 1; i < argc ; i++){
         if(strcmp(argv[i], "-l") == 0 && i < argc-1){
             int n = sscanf(argv[i+1],"%lu",&limit);    
             if(n != 1) continue;
         }
+        if(strcmp(argv[i],"-si") == 0){
+            showId = true;
+        }
     }
-    snfFindFromTimestamp(tstmp,limit);
+    snfFindFromTimestamp(tstmp,limit,showId);
 }
 
 void parseHelp(int argc,char **argv){
@@ -54,6 +56,7 @@ void parseHelp(int argc,char **argv){
     printf("    -Shows upcoming deadlines\n");
     printf("    -Flags:\n");
     printf("        -l [limit] : Limits amount of items to show\n");
+    printf("        -si : Shows item ids\n");
     printf("snf pop [id]\n");
     printf("    -Removes a remainder with specified id\n");
     printf("---------------------------------\n");

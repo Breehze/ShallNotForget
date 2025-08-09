@@ -57,7 +57,7 @@ void snfAdd(const char * reminder,const char * timestamp){
     return;
 }
 
-void snfFindFromTimestamp(uint64_t timestamp,uint64_t bound){   
+void snfFindFromTimestamp(time_t timestamp,uint64_t bound,bool showId){   
     json_t * root = FSopenJson();   
     
     if(!root || !json_is_array(root)){
@@ -94,17 +94,25 @@ void snfFindFromTimestamp(uint64_t timestamp,uint64_t bound){
         
         json_t *jtimestamp = json_object_get(jobj,"timestamp");
         json_t *jdata = json_object_get(jobj,"data"); 
+        json_t *jid = json_object_get(jobj,"id");
 
         if(!json_is_number(jtimestamp) || !json_is_string(jdata)){
             break;
         }
 
         const char * data = json_string_value(jdata);
+        const char * id = json_string_value(jid);
         uint64_t ts = json_number_value(jtimestamp);
         
         uint64_t dayDiff = (ts-timestamp)/(3600*24);
         UTILStstmpToString(ts);
-        printf("%s in %ld days | %s \n",UTILSgetDate(),dayDiff+1,data);
+        
+        if(showId) {
+            printf("%s |",id);
+        }
+        
+        printf("%s in %ld days | %s ",UTILSgetDate(),dayDiff+1,data);
+        printf("\n");
 
     }
 

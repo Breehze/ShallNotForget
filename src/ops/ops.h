@@ -2,9 +2,12 @@
 #define OPS_H
 
 #include <stddef.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <time.h>
 
 void snfAdd(const char * reminder , const char * timestamp);
-void snfFindFromTimestamp(size_t timestamp,size_t bound); 
+void snfFindFromTimestamp(time_t timestamp,uint64_t bound,bool showId); 
 
 
 void snfPop(const char * id);
