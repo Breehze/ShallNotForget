@@ -80,7 +80,7 @@ void snfFindFromTimestamp(time_t timestamp,uint64_t bound,bool showId){
             index = -1;         
             break;
         }
-        if(json_number_value(jsonTimestamp) > timestamp){
+        if(json_number_value(jsonTimestamp) > timestamp - 86400){
             break;
         }
     }
@@ -102,16 +102,19 @@ void snfFindFromTimestamp(time_t timestamp,uint64_t bound,bool showId){
 
         const char * data = json_string_value(jdata);
         const char * id = json_string_value(jid);
-        uint64_t ts = json_number_value(jtimestamp);
+        time_t ts = json_number_value(jtimestamp);
         
-        uint64_t dayDiff = (ts-timestamp)/(3600*24);
+        uint64_t dayDiff = 0;
+        if(timestamp < ts)
+            dayDiff = (ts-timestamp)/(3600*24) + 1;
+        
         UTILStstmpToString(ts);
         
         if(showId) {
             printf("%s |",id);
         }
         
-        printf("%s in %ld days | %s ",UTILSgetDate(),dayDiff+1,data);
+        printf("%s in %ld days | %s ",UTILSgetDate(),dayDiff,data);
         printf("\n");
 
     }
